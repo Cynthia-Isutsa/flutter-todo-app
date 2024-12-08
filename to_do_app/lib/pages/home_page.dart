@@ -24,6 +24,13 @@ class _HomePageState extends State<HomePage> {
     });
  }
 
+void deleteTask(int index){
+    setState(() {
+      toDoList.removeAt(index);
+     // _controller.clear();
+    });
+ }
+
   List toDoList = [
     ["Learn Flutter", false],
     ["Learn Java", false],
@@ -45,66 +52,72 @@ class _HomePageState extends State<HomePage> {
              taskCompleted:toDoList[index][1], 
             onChanged: (value){
           checkBoxChanged(index);
-            }
+            },
+            deleteFunction: (context){
+              deleteTask(index);
+            },
 
           );
       }),
-      floatingActionButton: Row(
-        children: [
-          Expanded(child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              controller: _controller ,
-              decoration: InputDecoration(
-                hintText: "Add new todo items",
-                filled: true,
-                fillColor: Colors.deepPurple.shade200,
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(15),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Expanded(child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: TextField(
+                controller: _controller ,
+                decoration: InputDecoration(
+                  hintText: "Add new todo items",
+                  filled: true,
+                  fillColor: Colors.deepPurple.shade200,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                   focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.deepPurple),
+                    borderRadius: BorderRadius.circular(15),
+                  )
+        
                 ),
-                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.deepPurple),
-                  borderRadius: BorderRadius.circular(15),
-                )
-
               ),
+            )),
+            FloatingActionButton(
+              onPressed: addNewTask,
+              //   showDialog(
+              //     context: context,
+              //     builder: (context) {
+              //       return AlertDialog(
+              //         title: const Text('Add Task'),
+              //         content: const TextField(
+              //           autofocus: true,
+              //           decoration: const InputDecoration(
+              //             hintText: 'Enter Task Here',
+              //           ),
+              //         ),
+              //         actions: [
+              //           TextButton(
+              //             onPressed: () {
+              //               Navigator.of(context).pop();
+              //             },
+              //             child: const Text('Cancel'),
+              //           ),
+              //           TextButton(
+              //             onPressed: () {
+              //               Navigator.of(context).pop();
+              //             },
+              //             child: const Text('Add'),
+              //           ),
+              //         ],
+              //       );
+              //     },
+              //   );
+              // },
+              child: const Icon(Icons.add),
             ),
-          )),
-          FloatingActionButton(
-            onPressed: addNewTask,
-            //   showDialog(
-            //     context: context,
-            //     builder: (context) {
-            //       return AlertDialog(
-            //         title: const Text('Add Task'),
-            //         content: const TextField(
-            //           autofocus: true,
-            //           decoration: const InputDecoration(
-            //             hintText: 'Enter Task Here',
-            //           ),
-            //         ),
-            //         actions: [
-            //           TextButton(
-            //             onPressed: () {
-            //               Navigator.of(context).pop();
-            //             },
-            //             child: const Text('Cancel'),
-            //           ),
-            //           TextButton(
-            //             onPressed: () {
-            //               Navigator.of(context).pop();
-            //             },
-            //             child: const Text('Add'),
-            //           ),
-            //         ],
-            //       );
-            //     },
-            //   );
-            // },
-            child: const Icon(Icons.add),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
